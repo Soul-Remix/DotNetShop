@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using Shop.Database;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlite(builder.Configuration.GetConnectionString("Data"),
+        b => b.MigrationsAssembly("Shop.Database"));
+});
 
 var app = builder.Build();
 
