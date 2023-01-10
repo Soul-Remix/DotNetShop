@@ -7,7 +7,7 @@ public class IndexModel : PageModel
 {
     private readonly IProductsRepository _repository;
 
-    [BindProperty] public ProductsViewModel Product { get; set; } = new ();
+    [BindProperty] public ProductsViewModel Product { get; set; } = new();
 
     public IndexModel(IProductsRepository repository)
     {
@@ -20,7 +20,6 @@ public class IndexModel : PageModel
 
     public async Task<IActionResult> OnPost()
     {
-        await _repository.CreateProduct(Product);
         return RedirectToPage(nameof(OnGet));
     }
 }

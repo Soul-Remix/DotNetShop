@@ -1,8 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Shop.Application.Interfaces;
-using Shop.Application.ViewModels;
-using Shop.Database;
-using Shop.Domain.Models;
 
 namespace Shop.Application.Repositories;
 
@@ -15,27 +11,30 @@ public class ProductsRepository : IProductsRepository
         _context = context;
     }
 
-    public async Task<Product> GetProduct(int id)
+    public async Task<ProductsViewModel> GetProduct(int id)
     {
-        var product = await _context.Products.Where(p => p.Id == id).FirstOrDefaultAsync();
+        var product = await _context.Products.AsNoTracking()
+            .Where(p => p.Id == id)
+            .Select(p => ProductToView(p))
+            .FirstOrDefaultAsync();
 
         return product;
     }
 
-    public async Task<List<Product>> GetProducts()
+    public async Task<List<ProductsViewModel>> GetProducts()
     {
-        return await _context.Products.ToListAsync();
+        return await _context.Products.AsNoTracking()
+            .Select(p => ProductToView(p))
+            .ToListAsync();
     }
 
-    public async Task CreateProduct(ProductsViewModel entity)
+    private ProductsViewModel ProductToView(Product p)
     {
-        var product = new Product()
+        return new ProductsViewModel()
         {
-            Name = entity.Name,
-            Description = entity.Name,
-            Price = entity.Price
+            Name = p.Name,
+            Description = p.Description,
+            Price = p.Price
         };
-        _context.Add(product);
-        await _context.SaveChangesAsync();
     }
 }
