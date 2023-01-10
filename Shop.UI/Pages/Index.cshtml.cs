@@ -1,18 +1,26 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Shop.Application.Interfaces;
+using Shop.Application.ViewModels;
 
 namespace Shop.UI.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly ILogger<IndexModel> _logger;
+    private readonly IProductsRepository _repository;
 
-    public IndexModel(ILogger<IndexModel> logger)
+    [BindProperty] public ProductsViewModel Product { get; set; } = new ();
+
+    public IndexModel(IProductsRepository repository)
     {
-        _logger = logger;
+        _repository = repository;
     }
 
     public void OnGet()
     {
+    }
+
+    public async Task<IActionResult> OnPost()
+    {
+        await _repository.CreateProduct(Product);
+        return RedirectToPage(nameof(OnGet));
     }
 }

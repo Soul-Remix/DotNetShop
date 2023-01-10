@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using Shop.Application.Interfaces;
+using Shop.Application.Repositories;
 using Shop.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +13,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("Data"),
         b => b.MigrationsAssembly("Shop.Database"));
 });
+
+builder.Services.AddTransient<IProductsRepository, ProductsRepository>();
 
 var app = builder.Build();
 
