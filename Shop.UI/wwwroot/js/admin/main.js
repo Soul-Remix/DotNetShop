@@ -11,6 +11,9 @@ Vue.createApp({
             }
         }
     },
+    mounted() {
+        this.getProducts()
+    },
     computed: {},
     methods: {
         getProduct: async function (id) {
@@ -18,7 +21,13 @@ Vue.createApp({
                 this.isLoading = true;
                 this.isError = false;
                 const res = await axios.get("/admin/products/" + id);
-                this.products = res.data;
+                let product = res.data;
+                this.productModel = {
+                    id: product.id,
+                    name: product.name,
+                    description: product.description,
+                    price: product.price
+                }
             } catch {
                 this.isError = true;
             }
@@ -64,13 +73,8 @@ Vue.createApp({
             }
             this.isLoading = false;
         },
-        editProduct: function (product) {
-            this.productModel = {
-                id: product.id,
-                name: product.name,
-                description: product.description,
-                price: product.price
-            }
+        editProduct: function (id) {
+            this.getProduct(id);
         },
         deleteProduct: async function (id) {
             try {
