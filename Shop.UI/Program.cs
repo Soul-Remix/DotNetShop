@@ -15,6 +15,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddTransient<IProductsRepository, ProductsRepository>();
+builder.Services.AddTransient<IAdminProductsRepository, AdminProductsRepository>();
+
 
 var app = builder.Build();
 
