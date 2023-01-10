@@ -28,7 +28,7 @@ public class AdminProductsRepository : IAdminProductsRepository
             .ToListAsync();
     }
 
-    public async Task CreateProduct(ProductsViewModel entity)
+    public async Task<ProductsViewModelAdmin> CreateProduct(ProductsViewModel entity)
     {
         var product = new Product()
         {
@@ -38,6 +38,8 @@ public class AdminProductsRepository : IAdminProductsRepository
         };
         _context.Add(product);
         await _context.SaveChangesAsync();
+
+        return ProductToView(product);
     }
 
     public async Task UpdateProduct(int id, ProductsViewModelAdmin entity)
@@ -57,7 +59,7 @@ public class AdminProductsRepository : IAdminProductsRepository
         product.Name = entity.Name;
         product.Description = entity.Description;
         product.Price = entity.Price;
-        
+
         await _context.SaveChangesAsync();
     }
 
@@ -73,7 +75,7 @@ public class AdminProductsRepository : IAdminProductsRepository
         await _context.SaveChangesAsync();
     }
 
-    private ProductsViewModelAdmin ProductToView(Product p)
+    private static ProductsViewModelAdmin ProductToView(Product p)
     {
         return new ProductsViewModelAdmin()
         {

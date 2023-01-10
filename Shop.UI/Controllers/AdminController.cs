@@ -28,14 +28,14 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateProduct(ProductsViewModel entity)
+    public async Task<IActionResult> CreateProduct([FromBody] ProductsViewModel entity)
     {
-        await _adminRepo.CreateProduct(entity);
-        return Ok();
+        var p = await _adminRepo.CreateProduct(entity);
+        return Ok(p);
     }
 
     [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateProduct(int id, ProductsViewModelAdmin entity)
+    public async Task<IActionResult> UpdateProduct(int id, [FromBody] ProductsViewModelAdmin entity)
     {
         await _adminRepo.UpdateProduct(id, entity);
         return Ok();

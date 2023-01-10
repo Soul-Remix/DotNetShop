@@ -28,7 +28,7 @@ public class ProductsRepository : IProductsRepository
             .ToListAsync();
     }
 
-    private ProductsViewModel ProductToView(Product p)
+    private static ProductsViewModel ProductToView(Product p)
     {
         return new ProductsViewModel()
         {
