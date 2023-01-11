@@ -5,10 +5,11 @@ Vue.createApp({
             isError: false,
             products: [],
             productModel: {
-                name: "hello",
-                description: "world",
+                name: "",
+                description: "",
                 price: 0.0
-            }
+            },
+            editing: false
         }
     },
     mounted() {
@@ -54,6 +55,7 @@ Vue.createApp({
                 this.isError = true;
             }
             this.isLoading = false;
+            this.editing = false;
         },
         updateProduct: async function () {
             try {
@@ -72,9 +74,11 @@ Vue.createApp({
                 this.isError = true;
             }
             this.isLoading = false;
+            this.editing = false;
         },
         editProduct: function (id) {
             this.getProduct(id);
+            this.editing = true;
         },
         deleteProduct: async function (id) {
             try {
@@ -88,5 +92,16 @@ Vue.createApp({
                 this.isError = true;
             }
         },
+        newProduct() {
+            this.editing = true
+            this.productModel = {
+                name: "",
+                description: "",
+                price: 0.0
+            };
+        },
+        cancel() {
+            this.editing = false
+        }
     }
 }).mount("#app");
