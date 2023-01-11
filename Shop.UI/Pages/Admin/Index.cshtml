@@ -1,82 +1,58 @@
 @page
 @model Shop.UI.Pages.Admin.Index
 
-@{
-}
-
 <div id="app" class="container">
-    <div class="columns">
-        <div class="column is-3">
-            <div class="menu">
-                <p class="menu-label">Admin Menu</p>
-                <ul class="menu-list">
-                    <li>
-                        <a>Products</a>
-                    </li>
-                    <li>
-                        <a>Stock</a>
-                    </li>
-                    <li>
-                        <a>Orders</a>
-                    </li>
-                </ul>
+    <div>
+        <button class="button" @@click="newProduct" v-if="!editing">Add new product</button>
+        <table class="table" v-if="!editing">
+            <tr>
+                <th>Id</th>
+                <th>Product</th>
+                <th>Price</th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr v-for="product in products">
+                <td>{{ product.id }}</td>
+                <td> {{ product.name }}</td>
+                <td> {{ product.price }}</td>
+                <td>
+                    <button class="button" @@click="editProduct(product.id)">Edit</button>
+                </td>
+                <td>
+                    <button class="button" @@click="deleteProduct(product.id)">Remove</button>
+                </td>
+            </tr>
+        </table>
+        <div v-if="editing">
+            <div class="field">
+                <div class="control">
+                    <label for="name" class="label">Product Name</label>
+                    <input id="name" class="input" v-model="productModel.name"/>
+                </div>
             </div>
-        </div>
-        <div class="column is-9">
-            <button class="button" @@click="newProduct" v-if="!editing">Add new product</button>
-            <table class="table" v-if="!editing">
-                <tr>
-                    <th>Id</th>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr v-for="product in products">
-                    <td>{{product.id}}</td>
-                    <td> {{product.name}} </td>
-                    <td> {{product.price}}</td>
-                    <td>
-                        <button class="button" @@click="editProduct(product.id)">Edit</button>
-                    </td>
-                    <td>
-                        <button class="button" @@click="deleteProduct(product.id)">Remove</button>
-                    </td>
-                </tr>
-            </table>
-        </div>
-    </div>
+            <div class="field">
+                <div class="control">
+                    <label for="desc" class="label">Product Description</label>
+                    <input id="desc" class="input" v-model="productModel.description"/>
+                </div>
+            </div>
+            <div class="field">
+                <div class="control">
+                    <label for="price" class="label">Product Price</label>
+                    <input id="price" class="input" v-model="productModel.price"/>
+                </div>
+            </div>
 
-    <div v-if="editing">
-        <div class="field">
-            <div class="control">
-                <label for="name" class="label">Product Name</label>
-                <input id="name" class="input" v-model="productModel.name"/>
-            </div>
+            <button class="button is-success" @@click="createProduct" v-if="!productModel.id">Create Product</button>
+            <button class="button is-warning" @@click="updateProduct" v-else>Update Product</button>
+            <button class="button" @@click="cancel">Cancel</button>
         </div>
-        <div class="field">
-            <div class="control">
-                <label for="desc" class="label">Product Description</label>
-                <input id="desc" class="input" v-model="productModel.description"/>
-            </div>
-        </div>
-        <div class="field">
-            <div class="control">
-                <label for="price" class="label">Product Price</label>
-                <input id="price" class="input" v-model="productModel.price"/>
-            </div>
-        </div>
-
-
-        <button class="button is-success" @@click="createProduct" v-if="!productModel.id">Create Product</button>
-        <button class="button is-warning" @@click="updateProduct" v-else>Update Product</button>
-        <button class="button" @@click="cancel">Cancel</button>
     </div>
 </div>
 
+
 @section Scripts
 {
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script src="~/js/admin/main.js"></script>
+    <script src="~/js/admin/product.js"></script>
 }

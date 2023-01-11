@@ -1,21 +1,19 @@
-Vue.createApp({
-    data() {
-        return {
-            isLoading: false,
-            isError: false,
-            products: [],
-            productModel: {
-                name: "",
-                description: "",
-                price: 0.0
-            },
-            editing: false
-        }
+new Vue({
+    el: "#app",
+    data: {
+        isLoading: false,
+        isError: false,
+        products: [],
+        productModel: {
+            name: "",
+            description: "",
+            price: 0.0
+        },
+        editing: false
     },
     mounted() {
         this.getProducts()
     },
-    computed: {},
     methods: {
         getProduct: async function (id) {
             try {
@@ -104,4 +102,4 @@ Vue.createApp({
             this.editing = false
         }
     }
-}).mount("#app");
+});
