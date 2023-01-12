@@ -14,6 +14,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
         b => b.MigrationsAssembly("Shop.Database"));
 });
 
+builder.Services.AddSession(options =>
+{
+    options.Cookie.Name = "Cart";
+    options.Cookie.MaxAge = TimeSpan.FromDays(4);
+});
+
 builder.Services.AddTransient<IProductsRepository, ProductsRepository>();
 builder.Services.AddTransient<IAdminProductsRepository, AdminProductsRepository>();
 builder.Services.AddTransient<IStockRepository, StockRepository>();
@@ -35,6 +41,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapRazorPages();
 app.MapControllers();
