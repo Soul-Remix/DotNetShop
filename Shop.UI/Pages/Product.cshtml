@@ -1,0 +1,9 @@
+@page "{name}"
+@model Shop.UI.Pages.Product
+
+<div>
+    <p>@Model.P.Name</p>
+    <p>@Model.P.Description</p>
+    <p>@Model.P.Price</p>
+    <p>@(Model.P.Stock.Count > 0)</p>
+</div>

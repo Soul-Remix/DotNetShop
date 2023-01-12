@@ -11,11 +11,11 @@ public class ProductsRepository : IProductsRepository
         _context = context;
     }
 
-    public async Task<ProductsViewModel> GetProduct(int id)
+    public async Task<Product> GetProduct(string name)
     {
         var product = await _context.Products.AsNoTracking()
-            .Where(p => p.Id == id)
-            .Select(p => ProductToView(p))
+            .Where(p => p.Name == name)
+            .Include(p => p.Stock)
             .FirstOrDefaultAsync();
 
         return product;
