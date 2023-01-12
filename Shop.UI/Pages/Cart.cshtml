@@ -1,0 +1,14 @@
+@page
+@model Shop.UI.Pages.Cart
+
+@{
+   
+}
+
+<div>
+    @foreach (var item in Model.CartModel)
+    {
+        <p>@item.StockId -- @item.Qty</p>
+    }
+</div>
+

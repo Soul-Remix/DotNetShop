@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Shop.Application.Interfaces;
 using Shop.Application.Repositories;
+using Shop.Application.Services;
 using Shop.Database;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -23,6 +24,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddTransient<IProductsRepository, ProductsRepository>();
 builder.Services.AddTransient<IAdminProductsRepository, AdminProductsRepository>();
 builder.Services.AddTransient<IStockRepository, StockRepository>();
+builder.Services.AddTransient<ICartService, CartService>();
 
 
 var app = builder.Build();
